@@ -1,0 +1,17 @@
+Webots Project File version R2023b
+perspectives: 000000ff00000000fd0000000200000001000002410000026efc0200000001fb0000001400540065007800740045006400690074006f007201000000000000026e0000008b00ffffff000000030000065a000000d9fc0100000001fb0000001a0043006f006e0073006f006c00650041006c006c0041006c006c01000000000000065a0000008700ffffff000004170000026e00000001000000020000000100000008fc00000000
+simulationViewPerspectives: 000000ff0000000100000002000001140000098e0100000002010000000100
+sceneTreePerspectives: 000000ff00000001000000030000001e000000c0000000fa0100000002010000000200
+maximizedDockId: -1
+centralWidgetVisible: 1
+orthographicViewHeight: 1
+textFiles: 1 "../../../../Applications/Webots.app/Contents/projects/robots/softbank/nao/controllers/nao_demo/nao_demo.c" "controllers/pink1_controller/pink1_controller.c"
+consoles: Console:All:All
+renderingDevicePerspectives: blue1:CameraBottom;0;1;0;0
+renderingDevicePerspectives: blue1:CameraTop;0;1;0;0
+renderingDevicePerspectives: blue2:CameraBottom;0;1;0;0
+renderingDevicePerspectives: blue2:CameraTop;0;1;0;0
+renderingDevicePerspectives: pink1:CameraBottom;0;1;0;0
+renderingDevicePerspectives: pink1:CameraTop;0;1;0;0
+renderingDevicePerspectives: pink2:CameraBottom;0;1;0;0
+renderingDevicePerspectives: pink2:CameraTop;0;1;0;0
