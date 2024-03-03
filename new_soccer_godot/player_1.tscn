@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://iht0efgyc050"]
+
+[ext_resource type="Script" path="res://player_1.gd" id="1_vlmnv"]
+[ext_resource type="PackedScene" uid="uid://cwqqgtdldeltg" path="res://banana_minium_soccer.glb" id="1_vyuel"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kf1eq"]
+radius = 0.347478
+height = 1.17924
+
+[node name="Player1" type="CharacterBody3D"]
+script = ExtResource("1_vlmnv")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Character" parent="Pivot" instance=ExtResource("1_vyuel")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0.0108153, 1.82465, -0.105055)
+shape = SubResource("CapsuleShape3D_kf1eq")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.155715, 0.86995, 3.21358)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.952476, 0.304615, 0, -0.304615, 0.952476, -0.527864, 3.54792, 3.13143)
