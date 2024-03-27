@@ -1,0 +1,9 @@
+Export Version: v1
+
+PROGRESS: Testing exportation on Godot 
+- Downloaded file
+- Changed Bundle Identifier: com.game.gwizz
+
+RESULTS:
+- Exportation successful
+- Need to change startup scene

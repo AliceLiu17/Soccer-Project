@@ -1,0 +1,12 @@
+Export Version: v2
+
+PROGRESS: Testing exportation on Godot 
+- Changed startup scene
+
+RESULTS:
+- Exportation successful
+- Startup scene was correct
+- Only starts game when clicking on `Player 1` then `Start Game`
+- Doesn't work with clicking on `Player 2` then `Start Game`
+- Doesn't work with clicking on `Player 1` then `Player 2` then `Start Game`
+- Need to figure out terminal, IP Address, IP Port to perhaps fix the issue of 2 players and Start Game
