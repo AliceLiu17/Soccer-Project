@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqx184kps2h34"]
+
+[ext_resource type="PackedScene" uid="uid://bp7r3g6lhos1w" path="res://soccer_field.glb" id="1_23i61"]
+[ext_resource type="Script" path="res://Goal.gd" id="2_ullsc"]
+[ext_resource type="Script" path="res://Area3D.gd" id="3_ynlrl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q6fwb"]
+size = Vector3(1.87704, 1.52063, 1.91089)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jwun6"]
+size = Vector3(1.80859, 1.63623, 1.81323)
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_23i61")]
+
+[node name="Area3D" type="Area3D" parent="Sketchfab_model/Root/Soccer Goal_001" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.253155)
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("2_ullsc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_model/Root/Soccer Goal_001/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00294492, 0.260315, 0.149292)
+shape = SubResource("BoxShape3D_q6fwb")
+
+[node name="Area3D" type="Area3D" parent="Sketchfab_model/Root/Soccer Goal" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0840646, 0, -0.0988362)
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("3_ynlrl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_model/Root/Soccer Goal/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.119306, 0.318115, -0.055262)
+shape = SubResource("BoxShape3D_jwun6")
+
+[connection signal="body_entered" from="Sketchfab_model/Root/Soccer Goal_001/Area3D" to="Sketchfab_model/Root/Soccer Goal_001/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="Sketchfab_model/Root/Soccer Goal/Area3D" to="Sketchfab_model/Root/Soccer Goal/Area3D" method="_on_body_entered"]
