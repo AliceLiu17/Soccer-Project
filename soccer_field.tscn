@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://c26e6n8yherq0"]
+
+[ext_resource type="PackedScene" uid="uid://bp7r3g6lhos1w" path="res://soccer_field.glb" id="1_jq431"]
+[ext_resource type="Script" path="res://Goal.gd" id="2_eq6ll"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1r0xv"]
+size = Vector3(2, 1, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2qj3k"]
+size = Vector3(2, 1, 2)
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_jq431")]
+
+[node name="Soccer Goal_001" parent="Sketchfab_model/Root" index="1"]
+script = ExtResource("2_eq6ll")
+
+[node name="Area3D" type="Area3D" parent="Sketchfab_model/Root/Soccer Goal_001" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.00639188)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_model/Root/Soccer Goal_001/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_1r0xv")
+
+[node name="Soccer Goal" parent="Sketchfab_model/Root" index="2"]
+script = ExtResource("2_eq6ll")
+
+[node name="Area3D" type="Area3D" parent="Sketchfab_model/Root/Soccer Goal" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0840646, 0, -0.0988362)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_model/Root/Soccer Goal/Area3D" index="0"]
+shape = SubResource("BoxShape3D_2qj3k")
