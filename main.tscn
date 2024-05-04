@@ -1,0 +1,209 @@
+[gd_scene load_steps=18 format=3 uid="uid://b85ry5v0niwa1"]
+
+[ext_resource type="PackedScene" uid="uid://bqx184kps2h34" path="res://stadium.tscn" id="1_6sgbi"]
+[ext_resource type="Script" path="res://SceneManager.gd" id="1_n1en1"]
+[ext_resource type="PackedScene" uid="uid://iht0efgyc050" path="res://player_1.tscn" id="2_r07ct"]
+[ext_resource type="PackedScene" uid="uid://bondl7dt6lq6v" path="res://ball.tscn" id="3_ojf5y"]
+[ext_resource type="Script" path="res://CameraController.gd" id="4_gemup"]
+[ext_resource type="Script" path="res://left_side.gd" id="4_m16di"]
+[ext_resource type="Script" path="res://ScoreTracker.gd" id="5_1r31b"]
+[ext_resource type="Script" path="res://PauseButton.gd" id="8_ay4nw"]
+[ext_resource type="Texture2D" uid="uid://n45o0o7uqyp0" path="res://pause button (white).png" id="8_kq15f"]
+[ext_resource type="PackedScene" uid="uid://bd7i2nrkldacx" path="res://game_over_screen.tscn" id="9_lh8bs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cldo3"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qcrh6"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_woyvl"]
+size = Vector3(31.3956, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ltvhd"]
+size = Vector3(34.2902, 1, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v40gj"]
+friction = 0.01
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ri8il"]
+properties/0/path = NodePath(".:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_a5l4j"]
+properties/0/path = NodePath("PauseButton:button_pressed")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Main" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.8693, -27.4329, -14.1396)
+script = ExtResource("1_n1en1")
+PlayerScene = ExtResource("2_r07ct")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.031, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_cldo3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_qcrh6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.925316, 0.208796, 0.316536, 0.379198, -0.509503, -0.772409, 8.88178e-16, 0.834752, -0.550626, 0, 0.374034, 4.48477)
+
+[node name="stadium" parent="." instance=ExtResource("1_6sgbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.016, 0)
+
+[node name="left_side" type="Area3D" parent="stadium/Sketchfab_model/Root" index="11"]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("4_m16di")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stadium/Sketchfab_model/Root/left_side"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.265404, 24.3746, 0.586035)
+shape = SubResource("BoxShape3D_woyvl")
+
+[node name="right_side" type="Area3D" parent="stadium"]
+collision_layer = 8
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="stadium/right_side"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00172424, 0.497345, 24.8201)
+shape = SubResource("BoxShape3D_ltvhd")
+
+[node name="Ball" parent="." groups=["soccer_ball"] instance=ExtResource("3_ojf5y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.73722, -0.0511274)
+collision_layer = 4
+collision_mask = 7
+physics_material_override = SubResource("PhysicsMaterial_v40gj")
+
+[node name="Player1" parent="." instance=ExtResource("2_r07ct")]
+transform = Transform3D(-0.890181, 0, 0.455607, 0, 1, 0, -0.455607, 0, -0.890181, -0.0235062, -1.83793, 5.042)
+visible = false
+collision_layer = 2
+collision_mask = 3
+
+[node name="Skeleton3D" parent="Player1/Pivot/character1/Armature" index="0"]
+bones/0/position = Vector3(-0.834345, -0.129293, -99.7886)
+bones/0/rotation = Quaternion(-0.727535, -0.0764874, 0.0186571, 0.681538)
+bones/1/rotation = Quaternion(-0.00781062, -0.0110077, 0.0427542, 0.998994)
+bones/2/rotation = Quaternion(0.0176848, -0.0161745, 0.0517619, 0.998372)
+bones/3/rotation = Quaternion(0.0181379, -0.0143155, 0.0521665, 0.998371)
+bones/4/rotation = Quaternion(0.0559675, 0.00590547, -0.0287569, 0.998001)
+bones/5/rotation = Quaternion(0.0196024, 0.0394971, -0.0986251, 0.994147)
+bones/7/rotation = Quaternion(-0.6047, -0.365522, 0.615661, -0.348846)
+bones/8/rotation = Quaternion(0.491625, 0.152464, 0.0367588, 0.856568)
+bones/9/rotation = Quaternion(0.00123995, -8.76767e-05, 0.115631, 0.993291)
+bones/10/rotation = Quaternion(0.0339241, 0.00224677, 0.0449654, 0.99841)
+bones/23/rotation = Quaternion(0.12891, 0.00999634, 0.0436282, 0.990646)
+bones/24/rotation = Quaternion(0.343038, 0.00019096, -0.0354352, 0.938653)
+bones/25/rotation = Quaternion(0.276644, -0.000223756, -0.028636, 0.960546)
+bones/27/rotation = Quaternion(0.166556, 0.0119912, 0.0190922, 0.985774)
+bones/28/rotation = Quaternion(0.253975, 0.00886071, 0.00642657, 0.967149)
+bones/29/rotation = Quaternion(0.438172, 0.000101515, -0.0500765, 0.897495)
+bones/31/rotation = Quaternion(0.659048, -0.321271, 0.576306, 0.360986)
+bones/32/rotation = Quaternion(0.329438, -0.107701, 0.042157, 0.937067)
+bones/33/rotation = Quaternion(0.000687924, 0.000108867, -0.0936967, 0.995601)
+bones/34/rotation = Quaternion(0.0406709, 0.093162, 0.058266, 0.993112)
+bones/35/rotation = Quaternion(0.155684, -0.0399376, -0.155131, 0.974732)
+bones/36/rotation = Quaternion(-0.0502528, -0.0350845, 0.116958, 0.991244)
+bones/37/rotation = Quaternion(-0.020122, 0.0270351, 0.0569563, 0.997808)
+bones/39/rotation = Quaternion(0.0680861, -0.0035908, -0.0536742, 0.996228)
+bones/40/rotation = Quaternion(0.158187, 0.00015886, 0.0163363, 0.987274)
+bones/41/rotation = Quaternion(0.0929565, -6.02722e-05, 0.0124131, 0.995593)
+bones/43/rotation = Quaternion(0.0804771, -0.00472983, -0.0462232, 0.995673)
+bones/44/rotation = Quaternion(0.253466, -0.000310479, 0.0261161, 0.966992)
+bones/45/rotation = Quaternion(0.098245, 3.53848e-05, 0.00893982, 0.995122)
+bones/47/rotation = Quaternion(0.139626, -0.00937249, -0.0375567, 0.989448)
+bones/48/rotation = Quaternion(0.291784, -7.10527e-05, 0.0307866, 0.955989)
+bones/49/rotation = Quaternion(0.226044, 1.32414e-05, 0.0237757, 0.973827)
+bones/51/rotation = Quaternion(0.166433, -0.0105382, -0.0416883, 0.985115)
+bones/52/rotation = Quaternion(0.252713, 0.000388971, 0.025051, 0.967217)
+bones/53/rotation = Quaternion(0.329892, -0.000235623, 0.0381518, 0.943247)
+bones/55/rotation = Quaternion(0.148963, 0.149433, 0.96874, -0.130469)
+bones/56/rotation = Quaternion(-0.132612, 0.0306539, 0.0035244, 0.990688)
+bones/57/rotation = Quaternion(0.389232, -0.00633969, -0.0590898, 0.919221)
+bones/58/rotation = Quaternion(0.309065, -0.0271153, 0.00894929, 0.950612)
+bones/60/rotation = Quaternion(-0.0799685, 0.0253612, 0.995007, -0.0540679)
+bones/61/rotation = Quaternion(-0.20245, 0.0505273, 0.0191722, 0.9778)
+bones/62/rotation = Quaternion(0.56249, -0.0444214, -0.0389039, 0.824693)
+bones/63/rotation = Quaternion(0.318604, 0.0251672, -0.00845354, 0.947516)
+
+[node name="SpawnLocation" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="SpawnLocation" groups=["PlayerSpawnPoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0143013, 0, 4.70678)
+
+[node name="1" type="Node3D" parent="SpawnLocation" groups=["PlayerSpawnPoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0286026, 0, -5.16641)
+
+[node name="CameraController_p1" type="Node3D" parent="." groups=["cameraController_group_p1"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+script = ExtResource("4_gemup")
+
+[node name="Camera3D_p1" type="Camera3D" parent="CameraController_p1"]
+transform = Transform3D(1, -5.82623e-16, 2.58792e-16, 2.58791e-16, 0.741976, 0.670427, -5.82623e-16, -0.670427, 0.741976, 0, 2.23288, 9.7869)
+
+[node name="LookAt_p1" type="Node3D" parent="CameraController_p1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.392, 6.085, 7.403)
+
+[node name="ScoreTracker" type="Control" parent="." groups=["ScoreLabel"]]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_1r31b")
+
+[node name="Label" type="Label" parent="ScoreTracker"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 9.0
+offset_right = 63.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 18
+text = "Alice: 0
+Emily: 0"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="ScoreTracker"]
+replication_config = SubResource("SceneReplicationConfig_ri8il")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+process_mode = 3
+offset_left = 1105.0
+offset_top = 15.0
+offset_right = 1145.0
+offset_bottom = 55.0
+texture_normal = ExtResource("8_kq15f")
+script = ExtResource("8_ay4nw")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="TextureButton"]
+root_path = NodePath("")
+replication_config = SubResource("SceneReplicationConfig_a5l4j")
+
+[node name="GamePausedLabel" type="Label" parent="."]
+offset_left = 329.0
+offset_top = 226.0
+offset_right = 817.0
+offset_bottom = 322.0
+theme_override_font_sizes/font_size = 70
+text = "GAME PAUSED"
+
+[node name="GameOverScreen" parent="." instance=ExtResource("9_lh8bs")]
+visible = false
+
+[connection signal="point_scores" from="stadium/Sketchfab_model/Root/Soccer Goal_001/Area3D" to="." method="_on_area_3d_point_scores"]
+[connection signal="point_scores" from="stadium/Sketchfab_model/Root/Soccer Goal_001/Area3D" to="ScoreTracker" method="_on_area_3d_point_scores"]
+[connection signal="point_scores" from="stadium/Sketchfab_model/Root/Soccer Goal/Area3D" to="." method="_on_area_3d_point_scores2"]
+[connection signal="point_scores" from="stadium/Sketchfab_model/Root/Soccer Goal/Area3D" to="ScoreTracker" method="_on_area_3d_point_scores2"]
+[connection signal="body_entered" from="stadium/Sketchfab_model/Root/left_side" to="." method="_on_left_side_body_entered"]
+[connection signal="body_entered" from="stadium/Sketchfab_model/Root/left_side" to="stadium/Sketchfab_model/Root/left_side" method="_on_body_entered"]
+[connection signal="body_entered" from="stadium/Sketchfab_model/Root/left_side" to="ScoreTracker" method="_on_left_side_body_entered"]
+[connection signal="body_entered" from="stadium/right_side" to="." method="_on_right_side_body_entered"]
+[connection signal="body_entered" from="stadium/right_side" to="ScoreTracker" method="_on_right_side_body_entered"]
+[connection signal="pressed" from="TextureButton" to="TextureButton" method="_on_pressed"]
+
+[editable path="stadium"]
+[editable path="Player1"]
+[editable path="Player1/Pivot/character1"]

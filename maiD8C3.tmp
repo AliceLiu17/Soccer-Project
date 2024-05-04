@@ -1,0 +1,122 @@
+[gd_scene load_steps=14 format=3 uid="uid://b85ry5v0niwa1"]
+
+[ext_resource type="PackedScene" uid="uid://bqx184kps2h34" path="res://stadium.tscn" id="1_6sgbi"]
+[ext_resource type="Script" path="res://SceneManager.gd" id="1_n1en1"]
+[ext_resource type="PackedScene" uid="uid://iht0efgyc050" path="res://player_1.tscn" id="2_r07ct"]
+[ext_resource type="PackedScene" uid="uid://bondl7dt6lq6v" path="res://ball.tscn" id="3_ojf5y"]
+[ext_resource type="Script" path="res://CameraController.gd" id="4_gemup"]
+[ext_resource type="Script" path="res://ScoreTracker.gd" id="5_1r31b"]
+[ext_resource type="Script" path="res://PauseButton.gd" id="8_ay4nw"]
+[ext_resource type="Texture2D" uid="uid://n45o0o7uqyp0" path="res://pause button (white).png" id="8_kq15f"]
+[ext_resource type="PackedScene" uid="uid://bd7i2nrkldacx" path="res://game_over_screen.tscn" id="9_lh8bs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cldo3"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qcrh6"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v40gj"]
+friction = 0.01
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_a5l4j"]
+properties/0/path = NodePath("PauseButton:button_pressed")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Main" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.8693, -27.4329, -14.1396)
+script = ExtResource("1_n1en1")
+PlayerScene = ExtResource("2_r07ct")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.031, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_cldo3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_qcrh6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.925316, 0.208796, 0.316536, 0.379198, -0.509503, -0.772409, 8.88178e-16, 0.834752, -0.550626, 0, 0.374034, 4.48477)
+
+[node name="stadium" parent="." instance=ExtResource("1_6sgbi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.016, 0)
+
+[node name="Ball" parent="." groups=["soccer_ball"] instance=ExtResource("3_ojf5y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.73722, -0.0511274)
+collision_layer = 4
+collision_mask = 7
+physics_material_override = SubResource("PhysicsMaterial_v40gj")
+
+[node name="Player1" parent="." instance=ExtResource("2_r07ct")]
+transform = Transform3D(-0.890181, 0, 0.455607, 0, 1, 0, -0.455607, 0, -0.890181, -0.0235062, -1.83793, 5.042)
+visible = false
+collision_layer = 2
+collision_mask = 3
+
+[node name="SpawnLocation" type="Node3D" parent="."]
+
+[node name="0" type="Node3D" parent="SpawnLocation" groups=["PlayerSpawnPoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0143013, 0, 4.70678)
+
+[node name="1" type="Node3D" parent="SpawnLocation" groups=["PlayerSpawnPoint"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0286026, 0, -5.16641)
+
+[node name="CameraController_p1" type="Node3D" parent="." groups=["cameraController_group_p1"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+script = ExtResource("4_gemup")
+
+[node name="Camera3D_p1" type="Camera3D" parent="CameraController_p1"]
+transform = Transform3D(1, -5.82623e-16, 2.58792e-16, 2.58791e-16, 0.741976, 0.670427, -5.82623e-16, -0.670427, 0.741976, 0, 2.23288, 9.7869)
+
+[node name="LookAt_p1" type="Node3D" parent="CameraController_p1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.392, 6.085, 7.403)
+
+[node name="ScoreTracker" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_1r31b")
+
+[node name="Label" type="Label" parent="ScoreTracker"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 9.0
+offset_right = 63.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 18
+text = "Alice: 0
+Emily: 0"
+
+[node name="TextureButton" type="TextureButton" parent="."]
+process_mode = 3
+offset_left = 1105.0
+offset_top = 15.0
+offset_right = 1145.0
+offset_bottom = 55.0
+texture_normal = ExtResource("8_kq15f")
+script = ExtResource("8_ay4nw")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="TextureButton"]
+root_path = NodePath("")
+replication_config = SubResource("SceneReplicationConfig_a5l4j")
+
+[node name="GamePausedLabel" type="Label" parent="."]
+offset_left = 329.0
+offset_top = 226.0
+offset_right = 817.0
+offset_bottom = 322.0
+theme_override_font_sizes/font_size = 70
+text = "GAME PAUSED"
+
+[node name="GameOverScreen" parent="." instance=ExtResource("9_lh8bs")]
+visible = false
+
+[connection signal="point_scores" from="stadium/Sketchfab_model/Root/Soccer Goal_001/Area3D" to="ScoreTracker" method="_on_area_3d_point_scores"]
+[connection signal="point_scores" from="stadium/Sketchfab_model/Root/Soccer Goal/Area3D" to="ScoreTracker" method="_on_area_3d_point_scores2"]
+[connection signal="pressed" from="TextureButton" to="TextureButton" method="_on_pressed"]
+
+[editable path="stadium"]
